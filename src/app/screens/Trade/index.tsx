@@ -47,6 +47,10 @@ class Trade extends React.Component<TradePropsType, TradeStateType> {
     });
   }
 
+  onSwap() {
+    alert("Swap is coming soon!");
+  }
+
   render() {
     const { cryptoAmount, cryptoToken, isVisible, assets, page } = this.state;
     const { email } = this.props;
@@ -93,7 +97,12 @@ class Trade extends React.Component<TradePropsType, TradeStateType> {
               </div>
             </div>
             <div className="card-footer">
-              <button className="btn btn-primary w-100 mt-3">Swap</button>
+              <button
+                className="btn btn-primary w-100 mt-3"
+                onClick={() => this.onSwap()}
+              >
+                Swap
+              </button>
             </div>
           </div>
         )}

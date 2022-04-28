@@ -103,6 +103,10 @@ export default class Home extends React.Component<{}, HomeStateType> {
     }
   }
 
+  onBuySell() {
+    alert("This feature is coming soon!");
+  }
+
   render() {
     const { assets, isLoading, page } = this.state;
     return (
@@ -152,8 +156,12 @@ export default class Home extends React.Component<{}, HomeStateType> {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                          <Dropdown.Item>Buy</Dropdown.Item>
-                          <Dropdown.Item>Sell</Dropdown.Item>
+                          <Dropdown.Item onClick={() => this.onBuySell()}>
+                            Buy
+                          </Dropdown.Item>
+                          <Dropdown.Item onClick={() => this.onBuySell()}>
+                            Sell
+                          </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
                     </td>
