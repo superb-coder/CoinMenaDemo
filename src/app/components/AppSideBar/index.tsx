@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import history from "../../routes/history";
+import history, { navigate, location } from "../../routes/history";
 import * as Icon from "react-bootstrap-icons";
-import { Link, useNavigate } from "react-router-dom";
 
 export default function AppSideBar() {
   const [currentRoute, setCurrentRoute] = useState("/");
-  // let navigate = useNavigate();
 
+  console.log(location);
   useEffect(() => {
-    history.listen((location) => setCurrentRoute(location.location.pathname));
+    console.log(location?.pathname);
   });
 
   return (
@@ -22,7 +21,12 @@ export default function AppSideBar() {
             className={
               "nav-link " + (currentRoute === "/" ? "active" : "link-dark")
             }
-            onClick={() => history.push("/")}
+            onClick={() => {
+              if (navigate) {
+                navigate("/");
+                setCurrentRoute("/");
+              }
+            }}
           >
             <Icon.HouseDoorFill className="bi me-2" />
             Home
@@ -34,11 +38,17 @@ export default function AppSideBar() {
               "nav-link " +
               (currentRoute === "/trades" ? "active" : "link-dark")
             }
-            onClick={() => history.push("/trades")}
+            onClick={() => {
+              if (navigate) {
+                navigate("/trades");
+                setCurrentRoute("/trades");
+              }
+            }}
           >
             <Icon.CurrencyExchange className="bi me-2" />
             Trade
           </a>
+          {/*<Link to="/">Trade</Link>*/}
         </li>
       </ul>
       <hr />
