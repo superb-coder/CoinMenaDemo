@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function AppSideBar() {
   const [currentRoute, setCurrentRoute] = useState("/");
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
 
   useEffect(() => {
     history.listen((location) => setCurrentRoute(location.location.pathname));
@@ -22,7 +22,7 @@ export default function AppSideBar() {
             className={
               "nav-link " + (currentRoute === "/" ? "active" : "link-dark")
             }
-            onClick={() => navigate("/")}
+            onClick={() => history.push("/")}
           >
             <Icon.HouseDoorFill className="bi me-2" />
             Home
@@ -34,7 +34,7 @@ export default function AppSideBar() {
               "nav-link " +
               (currentRoute === "/trades" ? "active" : "link-dark")
             }
-            onClick={() => navigate("/trades")}
+            onClick={() => history.push("/trades")}
           >
             <Icon.CurrencyExchange className="bi me-2" />
             Trade
