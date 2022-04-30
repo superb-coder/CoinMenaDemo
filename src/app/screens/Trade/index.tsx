@@ -5,9 +5,10 @@ import { getAssets } from "../../services/http_services";
 import AppAssetModal from "../../components/AppAssetModal";
 import { connect } from "react-redux";
 import { RootState } from "../../redux/store";
+import validator from "validator";
 
 interface TradeStateType {
-  cryptoAmount: number;
+  cryptoAmount: string;
   cryptoToken?: Asset;
   assets: Array<Asset>;
   page: number;
@@ -22,7 +23,7 @@ class Trade extends React.Component<TradePropsType, TradeStateType> {
   constructor(props: TradePropsType) {
     super(props);
     this.state = {
-      cryptoAmount: 0,
+      cryptoAmount: "0",
       cryptoToken: undefined,
       assets: [],
       page: 1,
@@ -47,6 +48,18 @@ class Trade extends React.Component<TradePropsType, TradeStateType> {
     });
   }
 
+  onChangeAmount(value: string) {
+    if (validator.isNumeric(value)) {
+      this.setState({
+        cryptoAmount: value,
+      });
+    } else if (value.at(-1) === "." && value.split(".").length < 3) {
+      this.setState({
+        cryptoAmount: value,
+      });
+    }
+  }
+
   onSwap() {
     alert("Swap is coming soon!");
   }
@@ -67,9 +80,7 @@ class Trade extends React.Component<TradePropsType, TradeStateType> {
                     inputMode="numeric"
                     value={cryptoAmount}
                     onChange={(value) =>
-                      this.setState({
-                        cryptoAmount: parseFloat(value.target.value || "0"),
-                      })
+                      this.onChangeAmount(value.target.value)
                     }
                   />
                   <button
@@ -88,7 +99,7 @@ class Trade extends React.Component<TradePropsType, TradeStateType> {
               <div className="d-flex flex-row mt-3 bg-light p-3 rounded-pill align-items-center justify-content-between">
                 <label className="h4 mb-0 ms-3">
                   {(
-                    cryptoAmount *
+                    parseFloat(cryptoAmount) *
                     (cryptoToken?.metrics?.market_data?.price_usd ?? 0)
                   ).toFixed(3)}
                 </label>
